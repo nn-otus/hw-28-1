@@ -21,7 +21,7 @@
 - 192.168.0.32/28    - office hardware
 - 192.168.0.64/26    - wifi
 
-![Схема_лабораторной_сети].(pics/1_NetScheme.PNG).
+#### Схема_лабораторной_сети
 ![Схема_лабораторной_сети](https://github.com/nn-otus/hw-28-1/blob/main/pisc/1_NetScheme.PNG)  
 Итого должны получиться следующие серверы:
 inetRouter  
@@ -612,6 +612,7 @@ Office2-Srv:~# ping -c1 Office1-Srv
 PING Office1-Srv (192.168.2.130): 56 data bytes
 64 bytes from 192.168.2.130: seq=0 ttl=61 time=2.560 ms
 ```
+![Скриншот пинга Интернет-ресурсов](https://github.com/nn-otus/hw-28-1/blob/main/pisc/2_srv_ping_inet.PNG)
 Результат проверки: со всех серверов есть доступ в Интернет и связь с другими серверами
 
 ## ДЗ-28 выполнено
