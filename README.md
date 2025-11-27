@@ -22,7 +22,7 @@
 - 192.168.0.64/26    - wifi
 
 ![Схема_лабораторной_сети].(pics/1_NetScheme.PNG).
-
+![Схема_лабораторной_сети](https://github.com/nn-otus/hw-28-1/blob/main/pisc/1_NetScheme.PNG)
 Итого должны получиться следующие серверы:
 inetRouter
 centralRouter
