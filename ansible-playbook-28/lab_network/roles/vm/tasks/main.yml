@@ -1,0 +1,10 @@
+- name: Configure VM network via netplan
+  ansible.builtin.template:
+    src: netplan.yml.j2
+    dest: /etc/netplan/01-netcfg.yaml
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Apply netplan
+  ansible.builtin.command: netplan apply

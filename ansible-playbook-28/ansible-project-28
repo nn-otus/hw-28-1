@@ -1,0 +1,38 @@
+lab_network/
+├── inventory.yml               # Список всех хостов и групп
+├── group_vars/
+│   └── all.yml                 # Переменные для всей сети (VLAN, IP, NAT, шлюзы)
+├── host_vars/
+│   ├── CentralRouter.yml
+│   ├── R1.yml
+│   ├── R2.yml
+│   └── InetRouter.yml
+├── roles/
+│   ├── router/
+│   │   ├── tasks/
+│   │   │   ├── main.yml       # Настройка IP, VLAN, маршрутов, forwarding
+│   │   │   └── nat.yml        # NAT через nftables (только для InetRouter)
+│   │   └── templates/
+│   │       └── nftables.j2
+│   ├── vm/
+│   │   ├── tasks/
+│   │   │   └── main.yml       # Настройка сетевых интерфейсов VM через netplan
+│   │   └── templates/
+│   │       └── netplan.yml.j2
+├── site.yml                    # Главный playbook для всей сети
+
+ Запуск: 
+ ```
+ ansible-playbook -i inventory.yml site.yml
+```
+
+Описание:
++ В group_vars/all.yml хранятся общие переменные: VLAN ID, подсети, шлюзы, NAT-сети, внешние интерфейсы.
+
++ В host_vars/ можно переопределять настройки для конкретного маршрутизатора (например, IP интерфейсов).
+
++ Роль router настраивает маршрутизаторы: VLAN, IP, маршруты, IP forwarding. Для InetRouter включается NAT.
+
++ Роль vm настраивает виртуальные машины через шаблон netplan, чтобы легко менять IP и шлюзы.
+
++ site.yml запускает роли по группам: сначала маршрутизаторы, затем VM.

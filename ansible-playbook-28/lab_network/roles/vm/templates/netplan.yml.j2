@@ -1,0 +1,12 @@
+network:
+  version: 2
+  renderer: networkd
+{% for iface in vm_interfaces %}
+  ethernets:
+    {{ iface.name }}:
+      dhcp4: false
+      addresses: [{{ iface.ip }}/{{ iface.prefix }}]
+      gateway4: {{ iface.gateway | default(omit) }}
+      nameservers:
+        addresses: {{ iface.nameservers | default(['8.8.8.8','1.1.1.1']) }}
+{% endfor %}

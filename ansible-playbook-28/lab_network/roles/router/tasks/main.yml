@@ -1,0 +1,19 @@
+- name: Configure VLAN interfaces
+  ansible.builtin.netplan:
+    name: "{{ item.name }}"
+    link: "{{ item.link | default('ens20') }}"
+    address: "{{ item.ip_address }}/{{ item.prefix }}"
+    state: present
+  loop: "{{ hostvars[inventory_hostname].vlans | default([]) }}"
+
+- name: Enable IP forwarding
+  ansible.builtin.sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    state: present
+    reload: yes
+
+- name: Configure static routes
+  ansible.builtin.command: ip route add {{ item.dest }} via {{ item.gateway }}
+  loop: "{{ hostvars[inventory_hostname].static_routes | default([]) }}"
+  ignore_errors: yes

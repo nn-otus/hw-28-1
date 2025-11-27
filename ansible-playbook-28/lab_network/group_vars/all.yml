@@ -1,0 +1,22 @@
+vlan_configs:
+  - name: vlan10
+    id: 10
+    network: 192.168.0.0/28
+  - name: vlan20
+    id: 20
+    network: 192.168.0.32/28
+  - name: vlan30
+    id: 30
+    network: 192.168.0.64/26
+  - name: vlan100
+    id: 100
+    network: 192.168.255.8/30
+  - name: vlan2200
+    id: 2200
+    network: 192.168.1.0/24
+
+nat_config:
+  enable: true
+  internal_networks:
+    - 192.168.0.0/16
+  external_interface: ens18

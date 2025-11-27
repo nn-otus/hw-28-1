@@ -1,0 +1,16 @@
+- name: Install nftables
+  ansible.builtin.apt:
+    name: nftables
+    state: present
+    update_cache: yes
+  when: nat_config.enable and inventory_hostname == "InetRouter"
+
+- name: Configure NAT via nftables
+  ansible.builtin.template:
+    src: nftables.j2
+    dest: /etc/nftables.conf
+  when: nat_config.enable and inventory_hostname == "InetRouter"
+
+- name: Apply nftables rules
+  ansible.builtin.command: nft -f /etc/nftables.conf
+  when: nat_config.enable and inventory_hostname == "InetRouter"

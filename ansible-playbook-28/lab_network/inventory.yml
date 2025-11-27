@@ -1,0 +1,28 @@
+all:
+  hosts:
+    CentralRouter:
+      ansible_host: 192.168.250.122
+    R1:
+      ansible_host: 192.168.250.123
+    R2:
+      ansible_host: 192.168.250.124
+    InetRouter:
+      ansible_host: 192.168.250.101
+    Central-Srv:
+      ansible_host: 192.168.250.150
+    Office1-Srv:
+      ansible_host: 192.168.250.151
+    Office2-Srv:
+      ansible_host: 192.168.250.152
+  children:
+    routers:
+      hosts:
+        CentralRouter:
+        R1:
+        R2:
+        InetRouter:
+    vms:
+      hosts:
+        Central-Srv:
+        Office1-Srv:
+        Office2-Srv:

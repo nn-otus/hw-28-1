@@ -1,0 +1,13 @@
+- hosts: routers
+  become: true
+  roles:
+    - router
+  tasks:
+    - include_role:
+        name: router
+        tasks_from: nat.yml
+
+- hosts: vms
+  become: true
+  roles:
+    - vm
