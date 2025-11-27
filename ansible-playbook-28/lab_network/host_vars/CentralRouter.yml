@@ -1,23 +1,56 @@
 network:
-  interfaces:
-    # Транзит в сторону InetRouter
-    ens19:
-      addresses: ["192.168.255.2/30"]
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens18:
+      dhcp4: false
+      addresses: [192.168.250.122/24] # Mgmt
+      routes:
+        - to: 192.168.250.0/24
+          via: 192.168.250.1
 
-    # uplink в сторону R1 (VLAN100)
+    ens19:
+      dhcp4: false
+      addresses: [192.168.255.2/30]
+      routes:
+        - to: default
+          via: 192.168.255.1        # Uplink to InetRouter
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 1.1.1.1
+    ens20:
+      dhcp4: false                  # Trunk port
+      mtu: 1500
+
+  vlans:
+    vlan10:
+      id: 10
+      link: ens20
+      addresses: [192.168.0.1/28]     # CentralServer
+
+    vlan20:
+      id: 20
+      link: ens20
+      addresses: [192.168.0.33/28]    # OfficeHardware network-1
+
+    vlan30:
+      id: 30
+      link: ens20
+      addresses: [192.168.0.65/26]    # OfficeHardware network-2
+
+    vlan2200:
+      id: 2200
+      link: ens20
+      addresses: [192.168.255.5/30]   # Office2-Router
+      routes:
+        - to: 192.168.1.0/24
+          via:  192.168.255.6
+
     vlan100:
       id: 100
-      link: "ens19"
-      addresses: ["192.168.255.9/30"]
-
-    # сеть office1
-    ens18:
-      addresses: ["192.168.2.1/24"]
-
-  static_routes:
-    - to: "0.0.0.0/0"
-      via: "192.168.255.1"    # default → InetRouter
-
-forwarding: true
-nat:
-  enabled: false
+      link: ens20
+      addresses: [192.168.255.9/30]   # Office1-Router
+      routes:
+        - to: 192.168.2.0/24
+          via:  192.168.255.10
