@@ -1,0 +1,16 @@
+#!/usr/sbin/nft -f
+
+flush ruleset
+
+table inet nat {
+    chain prerouting {
+        type nat hook prerouting priority 0; policy accept;
+    }
+
+    chain postrouting {
+        type nat hook postrouting priority 100; policy accept;
+        {% for net in nat_config.internal_networks %}
+        ip saddr {{ net }} oif {{ nat_config.external_interface }} masquerade
+        {% endfor %}
+    }
+}
