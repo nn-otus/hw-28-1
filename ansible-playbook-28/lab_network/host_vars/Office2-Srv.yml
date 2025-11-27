@@ -1,8 +1,8 @@
 network:
   interfaces:
     eth0:
-      addresses: ["192.168.2.194/26"]
-      gateway: "192.168.2.193"
+      addresses: ["192.168.1.2/25"]
+      gateway: "192.168.1.1"
       nameservers:
         - 8.8.8.8
         - 1.1.1.1
